@@ -1,9 +1,9 @@
 import React from 'react';
-import { PieChart, Wallet, Calendar, ShieldCheck, History, ArrowRight } from 'lucide-react';
+import { PieChart, Wallet, Calendar, ShieldCheck, History, ArrowRight, Trash2 } from 'lucide-react';
 import { CATEGORIES } from '../data/initialData';
 import { formatCurrency, calculateCoupleSummary } from '../utils/calculations';
 
-export default function AnalyticsView({ expenses, settlements, settings }) {
+export default function AnalyticsView({ expenses, settlements, settings, onDeleteSettlement }) {
   const curr = settings.currency || '$';
   const budget = settings.monthlyBudget || 2500;
   const p1Name = settings.partner1.name;
@@ -162,10 +162,21 @@ export default function AnalyticsView({ expenses, settlements, settings }) {
                       </span>
                     </div>
                   </div>
-
-                  <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-positive)' }}>
-                    +{formatCurrency(s.amount, curr)}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-positive)' }}>
+                      +{formatCurrency(s.amount, curr)}
+                    </div>
+                    {onDeleteSettlement && (
+                      <button 
+                        onClick={() => onDeleteSettlement(s.id)}
+                        className="btn-icon" 
+                        style={{ color: 'var(--color-negative)' }}
+                        title="Delete Settlement"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}

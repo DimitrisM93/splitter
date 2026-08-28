@@ -85,6 +85,12 @@ export default function App() {
     setSettlements(prev => [settlementData, ...prev]);
   };
 
+  const handleDeleteSettlement = (id) => {
+    if (window.confirm('Are you sure you want to delete this settlement?')) {
+      setSettlements(prev => prev.filter(s => s.id !== id));
+    }
+  };
+
   const handleSaveSettings = (newSettings) => {
     setSettings(newSettings);
   };
@@ -171,6 +177,7 @@ export default function App() {
               expenses={expenses}
               settlements={settlements}
               settings={settings}
+              onDeleteSettlement={handleDeleteSettlement}
             />
           )}
         </main>
